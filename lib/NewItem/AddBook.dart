@@ -90,6 +90,7 @@ class AddBook extends StatelessWidget{
                       labelText: 'Numer ISBN'
                   ),
                 ),
+                SizedBox(height: 10),
                 FlatButton(
                     color: Colors.blue,
                   onPressed: (){},

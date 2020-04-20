@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:rozrywka/Option.dart';
 
-import '../AddBook.dart';
+import '../NewItem/AddBook.dart';
 import '../NavDrawer.dart';
 class BooksPage extends StatelessWidget{
-  BooksPage(this.onSelected);
-  final Function(Option) onSelected; //only pass to NavDrawer
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,7 +19,7 @@ class BooksPage extends StatelessWidget{
                       MaterialPageRoute(builder: (context) => AddBook()));
                 },
               ),
-              drawer: NavDrawer(optionsData, Option.film, onSelected),
+              drawer: NavDrawer(optionsData, Option.book),
               appBar: AppBar(
                 bottom: TabBar(
                   tabs: [

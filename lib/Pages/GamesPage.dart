@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:rozrywka/Option.dart';
 
-import '../AddGame.dart';
+import '../NewItem/AddGame.dart';
 import '../NavDrawer.dart';
 class GamesPage extends StatelessWidget{
-  GamesPage(this.onSelected);
-  final Function(Option) onSelected; //only pass to NavDrawer
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,7 +19,7 @@ class GamesPage extends StatelessWidget{
                       MaterialPageRoute(builder: (context) => AddGame()));
                 },
               ),
-              drawer: NavDrawer(optionsData, Option.game, onSelected),
+              drawer: NavDrawer(optionsData, Option.game),
               appBar: AppBar(
                 bottom: TabBar(
                   tabs: [

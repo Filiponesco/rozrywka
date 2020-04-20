@@ -3,8 +3,6 @@ import 'package:rozrywka/Option.dart';
 
 import '../NavDrawer.dart';
 class SeriesPage extends StatelessWidget{
-  SeriesPage(this.onSelected);
-  final Function(Option) onSelected; //only pass to NavDrawer
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,7 +18,7 @@ class SeriesPage extends StatelessWidget{
 //                      MaterialPageRoute(builder: (context) => /*AddMovie()*/));
 //                },
               ),
-              drawer: NavDrawer(optionsData, Option.film, onSelected),
+              drawer: NavDrawer(optionsData, Option.series),
               appBar: AppBar(
                 bottom: TabBar(
                   tabs: [
