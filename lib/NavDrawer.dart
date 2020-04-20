@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'DrawerStateInfo.dart';
+import 'Option.dart';
 
 class NavDrawer extends StatelessWidget {
+  NavDrawer(this.options, this.currentPage, this.onSelected);
+  final Map<Option, OptionData> options;
+  final Option currentPage;
+  final Function(Option) onSelected;
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -18,36 +26,24 @@ class NavDrawer extends StatelessWidget {
                     fit: BoxFit.fill,
                     image: AssetImage('assets/images/nav.jpg'))),
           ),
-          ListTile(
-            leading: Icon(Icons.movie),
-            title: Text('Filmy'),
-            onTap: () {Navigator.of(context).pop();},
-          ),
-          ListTile(
-            leading: Icon(Icons.local_movies),
-            title: Text('Seriale'),
-            onTap: () {
-              Navigator.of(context).pop();
-
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.library_books),
-            title: Text('Książki'),
-            onTap: () => {Navigator.of(context).pop()},
-          ),
-          ListTile(
-            leading: Icon(Icons.videogame_asset),
-            title: Text('Gry'),
-            onTap: () => {Navigator.of(context).pop()},
-          ),
-          ListTile(
-            leading: Icon(Icons.exit_to_app),
-            title: Text('Wyloguj'),
-            onTap: () => {Navigator.of(context).pop()},
-          ),
+          ..._buildOptions(context),
         ],
       ),
+    );
+  }
+  List<Widget> _buildOptions(BuildContext context){
+    return options.keys.map((option) => _buildTile(context, option)).toList();
+  }
+  Widget _buildTile(BuildContext context, Option option){
+    final data = options[option];
+    return ListTile(
+      leading: Icon(data.iconData),
+      title: Text(data.title),
+      //trailing: currentPage == option ? Icon(Icons.check) : null,
+      onTap: () {
+        Navigator.of(context).pop();
+        onSelected(option);
+      },
     );
   }
 }

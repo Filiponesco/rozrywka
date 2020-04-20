@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:rozrywka/NavDrawer.dart';
-import 'package:rozrywka/AddBook.dart';
+import 'package:rozrywka/Pages/MoviesPage.dart';
+
+import 'Pages/BooksPage.dart';
+import 'Pages/GamesPage.dart';
+import 'Option.dart';
+import 'Pages/SeriesPage.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,42 +14,32 @@ class MyApp extends StatefulWidget {
   _Page createState() => new _Page();
 }
 class _Page extends State<MyApp> {
-  String _title = "Filmy";
+  Option _currentPage = Option.film;
+  void onSelectedMenu(selected){
+    setState(() {
+      _currentPage = selected;
+    });
+  }
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Builder(
-        builder: (context) => DefaultTabController(
-          length: 2,
-          child: Scaffold(
-            floatingActionButton: FloatingActionButton(
-              child: Icon(Icons.add),
-              onPressed: (){
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => AddBook()));
-                debugPrint("click");
-              },
-            ),
-            drawer: NavDrawer(),
-            appBar: AppBar(
-              bottom: TabBar(
-                tabs: [
-                  Tab(text: "Chcę zobaczyć"),
-                  Tab(text: "Obejrzane"),
-                ],
-              ),
-              title: Text(_title),
-            ),
-            body: TabBarView(
-              children: [
-                Text("Chcę zobaczyć"),
-                Text("Obejrzane"),
-              ],
-            ),
-          ),
-        ),
-      )
-    );
+      switch(_currentPage){
+        case Option.film:
+         return MoviesPage(onSelectedMenu);
+          break;
+        case Option.series:
+          return SeriesPage(onSelectedMenu);
+          break;
+        case Option.book:
+          return BooksPage(onSelectedMenu);
+          break;
+        case Option.game:
+          return GamesPage(onSelectedMenu);
+          break;
+        case Option.logout:
+          // TODO: Handle this case.
+          break;
+        default: return MoviesPage(onSelectedMenu);
+        break;
+      }
   }
 }
