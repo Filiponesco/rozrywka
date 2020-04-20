@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1019918327976",
+    "firebase_url": "https://rozrywka-adc7b.firebaseio.com",
+    "project_id": "rozrywka-adc7b",
+    "storage_bucket": "rozrywka-adc7b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1019918327976:android:a680ec2b7ea55d4acbe29d",
+        "android_client_info": {
+          "package_name": "com.example.rozrywka"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1019918327976-mfupsd6omtr2uomj0qhdgbgovv7titki.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQSQtG-Ww2ia8wEBgNezv7dq09F7ifGEo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1019918327976-mfupsd6omtr2uomj0qhdgbgovv7titki.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

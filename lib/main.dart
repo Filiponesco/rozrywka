@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rozrywka/Pages/MoviesPage.dart';
+import 'package:rozrywka/login_page.dart';
+
+import 'Auth.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,6 +14,6 @@ class MyApp extends StatefulWidget {
 class _Page extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MoviesPage();
+    return LoginPage(auth: Auth());
   }
 }
