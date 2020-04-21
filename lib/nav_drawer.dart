@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:rozrywka/Pages/SeriesPage.dart';
-
-import 'Option.dart';
-import 'Pages/BooksPage.dart';
-import 'Pages/GamesPage.dart';
-import 'Pages/MoviesPage.dart';
+import 'package:provider/provider.dart';
+import 'option.dart';
 
 class NavDrawer extends StatelessWidget {
-  NavDrawer(this.options, this.currentPage);
-  final Map<Option, OptionData> options;
-  final Option currentPage;
+  final Map<Option, OptionData> options = optionsData; //dependency!
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -18,7 +12,7 @@ class NavDrawer extends StatelessWidget {
         children: <Widget>[
           DrawerHeader(
             child: Text(
-              'Rozrywka',
+              "Rozrywka",
               style: TextStyle(color: Colors.white, fontSize: 25),
             ),
             decoration: BoxDecoration(
@@ -36,35 +30,18 @@ class NavDrawer extends StatelessWidget {
     return options.keys.map((option) => _buildTile(context, option)).toList();
   }
   Widget _buildTile(BuildContext context, Option option){
+    var currentPage = Provider.of<ValueNotifier<Option>>(context);
     final data = options[option];
+
     return ListTile(
       leading: Icon(data.iconData),
       title: Text(data.title),
-      trailing: currentPage == option ? Icon(Icons.check) : null,
+      trailing: currentPage.value == option ? Icon(Icons.check) : null,
       onTap: () {
         Navigator.of(context).pop();
-        switch(option){
-          case Option.film:
-            _changeRoute(context, MoviesPage());
-            break;
-          case Option.series:
-            _changeRoute(context, SeriesPage());
-            break;
-          case Option.book:
-            _changeRoute(context, BooksPage());
-            break;
-          case Option.game:
-            _changeRoute(context, GamesPage());
-            break;
-          case Option.logout:
-            // TODO: Handle this case.
-            break;
-        }
+        //change page
+        currentPage.value = option;
       },
     );
-  }
-  void _changeRoute(BuildContext context, page){
-    Route route = MaterialPageRoute(builder: (context) => page);
-    Navigator.pushReplacement(context, route);
   }
 }

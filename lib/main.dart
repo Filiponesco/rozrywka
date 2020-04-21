@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:rozrywka/Pages/MoviesPage.dart';
+import 'package:provider/provider.dart';
+import 'package:rozrywka/Pages/main_page.dart';
 import 'package:rozrywka/login_page.dart';
 
 import 'Auth.dart';
+import 'option.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,6 +16,10 @@ class MyApp extends StatefulWidget {
 class _Page extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return LoginPage(auth: Auth());
+    //return LoginPage(auth: Auth());
+    return ChangeNotifierProvider<ValueNotifier<Option>>(
+        create: (context) => ValueNotifier<Option>(Option.values[0]),
+        child: LoginPage(),
+    );
   }
 }
