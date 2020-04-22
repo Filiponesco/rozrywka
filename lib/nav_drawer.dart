@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'Auth.dart';
 import 'option.dart';
 
 class NavDrawer extends StatelessWidget {
@@ -10,11 +11,8 @@ class NavDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          DrawerHeader(
-            child: Text(
-              "Rozrywka",
-              style: TextStyle(color: Colors.white, fontSize: 25),
-            ),
+          UserAccountsDrawerHeader(
+            accountEmail: Text("TwojEmail@gmail.com"),
             decoration: BoxDecoration(
                 color: Colors.green,
                 image: DecorationImage(
@@ -26,12 +24,17 @@ class NavDrawer extends StatelessWidget {
       ),
     );
   }
-  List<Widget> _buildOptions(BuildContext context){
+
+  List<Widget> _buildOptions(BuildContext context) {
     return options.keys.map((option) => _buildTile(context, option)).toList();
   }
-  Widget _buildTile(BuildContext context, Option option){
+
+  Widget _buildTile(BuildContext context, Option option) {
     var currentPage = Provider.of<ValueNotifier<Option>>(context);
     final data = options[option];
+    void _logout(){
+      Auth().signOut();
+    }
 
     return ListTile(
       leading: Icon(data.iconData),
@@ -41,6 +44,9 @@ class NavDrawer extends StatelessWidget {
         Navigator.of(context).pop();
         //change page
         currentPage.value = option;
+        if(option == Option.logout){
+          _logout();
+        }
       },
     );
   }

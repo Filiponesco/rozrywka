@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rozrywka/Auth.dart';
 
 enum FormType{
@@ -30,102 +29,117 @@ class _LoginPageState extends State<LoginPage>{
       return false;
     }
   }
-  void validateAndSubmit()async{
-    if(validateAndSave()){
-        try{
-          if(_formType == FormType.login) {
-            String userID = await widget.auth.signInWithEmailAndPassword(_email, _password);
-            print("Signed in: $userID");
-          } else{
-            String userID = await widget.auth.createUserWithEmailAndPassword(_email, _password);
-            print("Registered user: $userID");
-          }
+  void validateAndSubmit(context)async {
+    if (validateAndSave()) {
+      try {
+        if (_formType == FormType.login) {
+          String userID = await widget.auth.signInWithEmailAndPassword(
+              _email, _password);
+          print("Signed in: $userID");
+        } else {
+          String userID = await widget.auth.createUserWithEmailAndPassword(
+              _email, _password);
+          print("Registered user: $userID");
         }
-        catch(e){
-          print("Error: $e");
-        }
+      }
+      catch (e) {
+        print("Error: $e");
+        _showAlert(context);
+      }
     }
   }
-  void moveToRegister(){
-    formKey.currentState.reset();
-    setState(() {
-      _formType = FormType.register;
-    });
+
+  void _showAlert(context) {
+    showDialog(
+        context: context,
+        builder: (context) =>
+        GestureDetector(
+          onTap: () => Navigator.pop(context),
+          child: AlertDialog(
+            title: Text("Niepoprawne dane"),
+            content: Text("Błędny login lub hasło"),
+          ),
+        )
+    );
   }
-  void moveToLogin(){
-    formKey.currentState.reset();
-    setState(() {
-      _formType = FormType.login;
-    });
-  }
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    void moveToRegister() {
+      formKey.currentState.reset();
+      setState(() {
+        _formType = FormType.register;
+      });
+    }
+    void moveToLogin() {
+      formKey.currentState.reset();
+      setState(() {
+        _formType = FormType.login;
+      });
+    }
+    @override
+    Widget build(BuildContext context) {
+      return Scaffold(
           appBar: AppBar(
             title: Text("Zaloguj się do rozrywki"),
           ),
-        body: Container(
-          padding: EdgeInsets.all(16),
-          child: Form(
-            key: formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: buildInputs() + builtSubmitButtons()
+          body: Container(
+            padding: EdgeInsets.all(16),
+            child: Form(
+              key: formKey,
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: buildInputs() + builtSubmitButtons(context)
+              ),
             ),
-          ),
-        )
-      )
-    );
-  }
-  List<Widget> buildInputs(){
-    return [
-      TextFormField(
-      decoration: InputDecoration(
-          labelText: "Email"
-      ),
-      validator: (value) =>
-      value.isEmpty ? "Email nie może być pusty" : null,
-      onSaved: (value) => _email = value,
-    ),
-      TextFormField(
-        decoration: InputDecoration(
-          labelText: "Hasło",
-        ),
-        obscureText: true,
-        validator: (value) =>
-        value.isEmpty ? "Hasło nie może być puste" : null,
-        onSaved: (value) => _password = value,
-      ),
-    ];
-  }
-  List<Widget> builtSubmitButtons(){
-    if(_formType == FormType.login) {
+          )
+      );
+    }
+    List<Widget> buildInputs() {
       return [
-        RaisedButton(
-          child: Text(
-              "Zaloguj"
+        TextFormField(
+          decoration: InputDecoration(
+              labelText: "Email"
           ),
-          onPressed: validateAndSubmit,
+          validator: (value) =>
+          value.isEmpty ? "Email nie może być pusty" : null,
+          onSaved: (value) => _email = value,
         ),
-        FlatButton(
-          child: Text("Zarejestruj się"),
-          onPressed: moveToRegister,
-        )
-      ];
-    }else{
-      return [
-        RaisedButton(
-          child: Text(
-              "Stwórz konto"
+        TextFormField(
+          decoration: InputDecoration(
+            labelText: "Hasło",
           ),
-          onPressed: validateAndSubmit,
+          obscureText: true,
+          validator: (value) =>
+          value.isEmpty ? "Hasło nie może być puste" : null,
+          onSaved: (value) => _password = value,
         ),
-        FlatButton(
-          child: Text("Masz konto? Zaloguj się"),
-          onPressed: moveToLogin,
-        )
       ];
     }
+    List<Widget> builtSubmitButtons(context) {
+      if (_formType == FormType.login) {
+        return [
+          RaisedButton(
+            child: Text(
+                "Zaloguj"
+            ),
+            onPressed: () => validateAndSubmit(context),
+          ),
+          FlatButton(
+            child: Text("Zarejestruj się"),
+            onPressed: moveToRegister,
+          )
+        ];
+      } else {
+        return [
+          RaisedButton(
+            child: Text(
+                "Stwórz konto"
+            ),
+            onPressed: () => validateAndSubmit(context),
+          ),
+          FlatButton(
+            child: Text("Masz konto? Zaloguj się"),
+            onPressed: moveToLogin,
+          )
+        ];
+      }
+    }
   }
-}
