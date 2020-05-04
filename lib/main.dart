@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rozrywka/wrapper.dart';
 
-import 'Auth.dart';
+import 'services/auth.dart';
 
 void main() {
   runApp(MyApp());

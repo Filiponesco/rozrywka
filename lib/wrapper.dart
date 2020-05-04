@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rozrywka/login_page.dart';
+import 'package:rozrywka/pages/home/home_page.dart';
+import 'package:rozrywka/pages/login_page.dart';
 
-import 'Auth.dart';
-import 'Pages/main_page.dart';
-import 'option.dart';
+import 'services/auth.dart';
+import 'menu/option.dart';
 
 class Wrapper extends StatelessWidget{
   @override
@@ -15,7 +15,7 @@ class Wrapper extends StatelessWidget{
     else {
       return ChangeNotifierProvider<ValueNotifier<Option>>(
         create: (context) => ValueNotifier<Option>(Option.values[0]),
-        child: MainPage(),
+        child: HomePage(),
       );
     }
   }

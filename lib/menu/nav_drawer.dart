@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'Auth.dart';
+import '../services/auth.dart';
 import 'option.dart';
 
 class NavDrawer extends StatelessWidget {
@@ -32,6 +32,7 @@ class NavDrawer extends StatelessWidget {
   Widget _buildTile(BuildContext context, Option option) {
     var currentPage = Provider.of<ValueNotifier<Option>>(context);
     final data = options[option];
+
     void _logout(){
       Auth().signOut();
     }

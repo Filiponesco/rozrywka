@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rozrywka/Auth.dart';
+import 'package:rozrywka/services/auth.dart';
 
 enum FormType{
   login,

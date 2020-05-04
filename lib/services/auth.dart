@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:rozrywka/services/database.dart';
 
 abstract class BaseAuth {
   Stream<String> get userID;
