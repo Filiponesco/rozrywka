@@ -20,6 +20,8 @@ class HomeTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userID = Provider.of<String>(context);
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -37,21 +39,22 @@ class HomeTabs extends StatelessWidget {
             ],
           ),
         ),
-        body: TabBarView(
-          children: <Widget>[
-            _tab1(context),
-            _tab2(),
-          ],
+        // i decide to keep tab with data
+        body: StreamProvider<List<Book>>.value(
+          value: DatabaseService(uid: userID).books,
+          child:  TabBarView(
+            children: <Widget>[
+              _tab1(),
+              _tab2(),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _tab1(context) {
-    final userID = Provider.of<String>(context);
-    return StreamProvider<List<Book>>.value(
-        value: DatabaseService(uid: userID).books,
-        child: BookList());
+  Widget _tab1() {
+    return BookList();
   }
 
   Widget _tab2() {

@@ -3,7 +3,9 @@ import 'package:rozrywka/models/book.dart';
 
 class BookTile extends StatelessWidget {
   final Book _book;
+
   BookTile(this._book);
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -13,7 +15,11 @@ class BookTile extends StatelessWidget {
         backgroundColor: Colors.blueGrey,
       ),
       title: Text(_book.title),
-          subtitle: Text("${_book.surname} ${_book.forename}"),
+      subtitle: Text("${_book.surname} ${_book.forename}"),
+          trailing: Icon(
+            Icons.delete,
+            color: Colors.red
+          ),
     ));
   }
 }
