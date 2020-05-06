@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Book {
+  String id;
   String forename = "";
   String surname = "";
   String title = "";
@@ -8,7 +9,18 @@ class Book {
   String publishedDate = "";
   String publisher = "";
   String pages = "";
-  String isbn ="";
+  String isbn = "";
+  bool isRead;
 
-  Book({this.forename, this.surname, this.title, this.category, this.publishedDate, this.publisher, this.pages, this.isbn});
+  Book(
+      {this.id = "",
+      this.forename = "",
+      this.surname = "",
+      this.title = "",
+      this.category = "",
+      this.publishedDate = "",
+      this.publisher = "",
+      this.pages = "",
+      this.isbn = "",
+      this.isRead = false});
 }

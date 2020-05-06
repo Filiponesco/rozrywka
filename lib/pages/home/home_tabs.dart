@@ -43,6 +43,7 @@ class HomeTabs extends StatelessWidget {
         body: StreamProvider<List<Book>>.value(
           value: DatabaseService(uid: userID).books,
           child:  TabBarView(
+            physics: BouncingScrollPhysics(),
             children: <Widget>[
               _tab1(),
               _tab2(),
@@ -54,10 +55,10 @@ class HomeTabs extends StatelessWidget {
   }
 
   Widget _tab1() {
-    return BookList();
+    return BookList(true);
   }
 
   Widget _tab2() {
-    return Text("second");
+    return BookList(false);
   }
 }

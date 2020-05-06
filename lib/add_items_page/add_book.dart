@@ -30,7 +30,7 @@ class AddBookForm extends StatefulWidget {
 
 class _AddBookFormState extends State<AddBookForm> {
   final _formKey = GlobalKey<FormState>();
-  Book _book;
+  Book _book = Book();
 
   bool _validateAndSave() {
     final form = _formKey.currentState;
@@ -44,7 +44,7 @@ class _AddBookFormState extends State<AddBookForm> {
 
   void _validateAndSend(String userID) async {
     if (_validateAndSave()) {
-      await DatabaseService(uid: userID).updateBooksData(
+      await DatabaseService(uid: userID).addBook(
           _book.surname,
           _book.forename,
           _book.title,
@@ -52,7 +52,8 @@ class _AddBookFormState extends State<AddBookForm> {
           _book.publishedDate,
           _book.publisher,
           _book.pages,
-          _book.isbn);
+          _book.isbn,
+          _book.isRead);
       _showSnackBar("Zapisano");
     }
   }
@@ -64,7 +65,6 @@ class _AddBookFormState extends State<AddBookForm> {
   @override
   Widget build(BuildContext context) {
     final userID = Provider.of<String>(context);
-    _book = Book();
     return Form(
       key: _formKey,
       child: ListView(padding: EdgeInsets.all(8), children: <Widget>[
@@ -143,6 +143,20 @@ class _AddBookFormState extends State<AddBookForm> {
           textCapitalization: TextCapitalization.words,
           decoration: InputDecoration(
               border: OutlineInputBorder(), labelText: 'Numer ISBN'),
+        ),
+        SizedBox(height: 10),
+        Row(
+          children: <Widget>[
+            Checkbox(
+
+                onChanged: (value) {
+                  setState(() {
+                    _book.isRead = value;
+                  });
+                },
+                value: _book.isRead),
+            Text("Przeczytana", style: TextStyle(fontSize: 17)),
+          ],
         ),
         SizedBox(height: 10),
         FlatButton(
