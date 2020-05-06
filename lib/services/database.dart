@@ -47,7 +47,7 @@ class DatabaseService {
         publisher: doc.data['publisher'] ?? '',
         pages: doc.data['pages'] ?? '',
         isbn: doc.data['isbn'] ?? '',
-        isRead: doc.data['isRead'] ?? true,
+        isRead: doc.data['is_read'] ?? true,
       );
     }).toList();
   }

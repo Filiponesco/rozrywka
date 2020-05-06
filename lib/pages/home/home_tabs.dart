@@ -55,10 +55,10 @@ class HomeTabs extends StatelessWidget {
   }
 
   Widget _tab1() {
-    return BookList(true);
+    return BookList(isDoneTab: false,);
   }
 
   Widget _tab2() {
-    return BookList(false);
+    return BookList(isDoneTab: true,);
   }
 }
