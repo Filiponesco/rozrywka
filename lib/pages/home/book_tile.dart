@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rozrywka/models/book.dart';
+import 'package:rozrywka/pages/item_info.dart';
 import 'package:rozrywka/services/database.dart';
 
 class BookTile extends StatelessWidget {
@@ -18,6 +19,11 @@ class BookTile extends StatelessWidget {
     DatabaseService(uid: userID).updateBookRead(bookID, !_isDoneTab);
   }
 
+  void _clickOnCard(context, String userID, String bookID) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => ItemInfo()));
+  }
+
   @override
   Widget build(BuildContext context) {
     final userID = Provider.of<String>(context, listen: false);
@@ -30,6 +36,7 @@ class BookTile extends StatelessWidget {
       onDismissed: (_) => _moveCardToOtherTab(userID, _book.id),
       child: Card(
           child: ListTile(
+              onTap: () => _clickOnCard(context, userID, _book.id),
               leading: CircleAvatar(
                 radius: 25,
                 backgroundColor: Colors.blueGrey,
@@ -55,7 +62,7 @@ Widget _bgCard(isDoneTab) {
             color: Colors.yellow,
           ),
         ));
-  } else{
+  } else {
     return Padding(
         padding: EdgeInsets.only(left: 15),
         child: Align(

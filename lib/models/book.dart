@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
-
-class Book {
+import 'package:json_annotation/json_annotation.dart';
+part 'book.g.dart';
+@JsonSerializable()
+class Book{
+  //id is generate by firebase
   String id;
-  String forename = "";
-  String surname = "";
-  String title = "";
-  String category = "";
-  String publishedDate = "";
-  String publisher = "";
-  String pages = "";
-  String isbn = "";
+  String forename;
+  String surname;
+  String title;
+  String category;
+  String publishedDate;
+  String publisher;
+  String pages;
+  String isbn;
   bool isRead;
 
   Book(
@@ -23,4 +26,7 @@ class Book {
       this.pages = "",
       this.isbn = "",
       this.isRead = false});
+
+  factory Book.fromJson(Map<String, dynamic> json) => _$BookFromJson(json);
+  Map<String, dynamic> toJson() => _$BookToJson(this);
 }

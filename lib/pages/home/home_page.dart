@@ -6,20 +6,20 @@ import 'package:rozrywka/pages/home/home_tabs.dart';
 import '../../menu/nav_drawer.dart';
 
 class HomePage extends StatelessWidget {
-  final Map<Option, OptionData> options = optionsData; //dependency!
+  //final Map<Option, OptionData> options = optionsData; //dependency!
 
   @override
   Widget build(BuildContext context) {
-    var currentPage = Provider.of<ValueNotifier<Option>>(context);
+    final currentPage = Provider.of<ValueNotifier<Option>>(context);
     switch (currentPage.value) {
       case Option.film:
-        return HomeTabs(options[currentPage.value]);
+        return HomeTabs(currentPage.value);
         break;
       case Option.series:
       // TODO: Handle this case.
         break;
       case Option.book:
-        return HomeTabs(options[currentPage.value]);
+        return HomeTabs(currentPage.value);
         break;
       case Option.game:
       // TODO: Handle this case.

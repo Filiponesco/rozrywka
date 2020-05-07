@@ -45,15 +45,7 @@ class _AddBookFormState extends State<AddBookForm> {
   void _validateAndSend(String userID) async {
     if (_validateAndSave()) {
       await DatabaseService(uid: userID).addBook(
-          _book.surname,
-          _book.forename,
-          _book.title,
-          _book.category,
-          _book.publishedDate,
-          _book.publisher,
-          _book.pages,
-          _book.isbn,
-          _book.isRead);
+          _book);
       _showSnackBar("Zapisano");
     }
   }

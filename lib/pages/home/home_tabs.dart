@@ -9,9 +9,9 @@ import 'package:rozrywka/services/database.dart';
 import 'book_list.dart';
 
 class HomeTabs extends StatelessWidget {
-  HomeTabs(this.option);
-
-  final OptionData option;
+  HomeTabs(this.page);
+  final Option page;
+  final Map<Option, OptionData> options = optionsData; //dependency!
 
   void _newIntent(context) {
     Navigator.push(context,
@@ -31,7 +31,7 @@ class HomeTabs extends StatelessWidget {
         ),
         drawer: NavDrawer(), //dependence
         appBar: AppBar(
-          title: Text(option.title),
+          title: Text(optionsData[page].title),
           bottom: TabBar(
             tabs: [
               Text("Chcę obejrzeć"),
@@ -55,10 +55,10 @@ class HomeTabs extends StatelessWidget {
   }
 
   Widget _tab1() {
-    return BookList(isDoneTab: false,);
+    return BookList(isDoneTab: false, page: page,);
   }
 
   Widget _tab2() {
-    return BookList(isDoneTab: true,);
+    return BookList(isDoneTab: true, page: page);
   }
 }
