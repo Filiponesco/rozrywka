@@ -44,7 +44,7 @@ class _AddBookFormState extends State<AddBookForm> {
 
   void _validateAndSend(String userID) async {
     if (_validateAndSave()) {
-      await DatabaseService(uid: userID).addBook(
+      await DatabaseService(uid: userID).addItem(
           _book);
       _showSnackBar("Zapisano");
     }
@@ -143,10 +143,10 @@ class _AddBookFormState extends State<AddBookForm> {
 
                 onChanged: (value) {
                   setState(() {
-                    _book.isRead = value;
+                    _book.isDone = value;
                   });
                 },
-                value: _book.isRead),
+                value: _book.isDone),
             Text("Przeczytana", style: TextStyle(fontSize: 17)),
           ],
         ),

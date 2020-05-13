@@ -1,7 +1,13 @@
+import 'dart:convert';
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:rozrywka/models/book.dart';
+import 'package:rozrywka/models/game.dart';
+import 'package:rozrywka/models/item_card.dart';
+import 'package:rozrywka/models/movie.dart';
+import 'package:rozrywka/models/series.dart';
 
 class DatabaseService {
   final String uid;
@@ -12,11 +18,27 @@ class DatabaseService {
   final CollectionReference usersCollection =
   Firestore.instance.collection('users');
 
-  Future addBook(Book book) async {
-    return await usersCollection.document(uid).collection('books')
-        .add(book.toJson());
+  Future addItem(ItemCard item)async {
+    return await usersCollection.document(uid).collection(item.tableName)
+        .add(item.toJson());
   }
-
+  Future deleteItem(ItemCard item) async {
+    return await usersCollection
+        .document(uid)
+        .collection(item.tableName)
+        .document(item.id)
+        .delete();
+  }
+  Future updateItemDone(ItemCard item, bool isDone) async {
+    return await usersCollection
+        .document(uid)
+        .collection(item.tableName)
+        .document(item.id)
+        .updateData({
+      'isDone': isDone,
+    });
+  }
+  //book
   //books list from snapshot
   List<Book> _bookListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
@@ -26,7 +48,6 @@ class DatabaseService {
       return Book.fromJson(dataAndID);
     }).toList();
   }
-
   Stream<List<Book>> get books {
     //return usersCollection.snapshots();
     return usersCollection
@@ -36,21 +57,57 @@ class DatabaseService {
         .map(_bookListFromSnapshot);
   }
 
-  Future deleteBook(String bookID) async {
-    return await usersCollection
+  //game
+  List<Game> _gameListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.documents.map((doc) {
+      Map<String, dynamic> dataAndID = doc.data;
+      dataAndID['id'] = doc.documentID;
+      print("data from Fire:  $dataAndID");
+      return Game.fromJson(dataAndID);
+    }).toList();
+  }
+  Stream<List<Game>> get games {
+    //return usersCollection.snapshots();
+    return usersCollection
         .document(uid)
-        .collection('books')
-        .document(bookID)
-        .delete();
+        .collection('games')
+        .snapshots()
+        .map(_gameListFromSnapshot);
   }
 
-  Future updateBookRead(String bookID, bool isRead) async {
-    return await usersCollection
+  //movie
+  List<Movie> _movieListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.documents.map((doc) {
+      Map<String, dynamic> dataAndID = doc.data;
+      dataAndID['id'] = doc.documentID;
+      print("data from Fire:  $dataAndID");
+      return Movie.fromJson(dataAndID);
+    }).toList();
+  }
+  Stream<List<Movie>> get movies {
+    //return usersCollection.snapshots();
+    return usersCollection
         .document(uid)
-        .collection('books')
-        .document(bookID)
-        .updateData({
-      'isRead': isRead,
-    });
+        .collection('movies')
+        .snapshots()
+        .map(_movieListFromSnapshot);
+  }
+
+  //series
+  List<Series> _seriesListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.documents.map((doc) {
+      Map<String, dynamic> dataAndID = doc.data;
+      dataAndID['id'] = doc.documentID;
+      print("data from Fire:  $dataAndID");
+      return Series.fromJson(dataAndID);
+    }).toList();
+  }
+  Stream<List<Series>> get series {
+    //return usersCollection.snapshots();
+    return usersCollection
+        .document(uid)
+        .collection('series')
+        .snapshots()
+        .map(_seriesListFromSnapshot);
   }
 }

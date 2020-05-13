@@ -1,64 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rozrywka/add_items_page/add_book.dart';
 import 'package:rozrywka/menu/nav_drawer.dart';
 import 'package:rozrywka/menu/option.dart';
-import 'package:rozrywka/models/book.dart';
-import 'package:rozrywka/services/database.dart';
+import 'package:rozrywka/models/create_tabs.dart';
 
-import 'book_list.dart';
+import '../../widgets/item_list.dart';
 
 class HomeTabs extends StatelessWidget {
-  HomeTabs(this.page);
-  final Option page;
+  HomeTabs();
   final Map<Option, OptionData> options = optionsData; //dependency!
-
-  void _newIntent(context) {
+  final Map<Option, OptionTabView> specifics = specificsTabs; //dependency
+  void _newIntent(context, page) {
     Navigator.push(context,
-        MaterialPageRoute(builder: (BuildContext context) => AddBook()));
+        MaterialPageRoute(builder:  specifics[page].addNewItemPage));
   }
 
   @override
   Widget build(BuildContext context) {
-    final userID = Provider.of<String>(context);
-
+    final page = Provider.of<ValueNotifier<Option>>(context);
     return DefaultTabController(
       length: 2,
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
-          onPressed: () => _newIntent(context),
+          onPressed: () => _newIntent(context, page.value),
         ),
         drawer: NavDrawer(), //dependence
         appBar: AppBar(
-          title: Text(optionsData[page].title),
+          title: Text(options[page.value].title),
           bottom: TabBar(
             tabs: [
-              Text("Chcę obejrzeć"),
-              Text("Obejrzane"),
+              Text(specifics[page.value].titleOne),
+              Text(specifics[page.value].titleTwo),
             ],
           ),
         ),
-        // i decide to keep tab with data
-        body: StreamProvider<List<Book>>.value(
-          value: DatabaseService(uid: userID).books,
-          child:  TabBarView(
-            physics: BouncingScrollPhysics(),
+        body: TabBarView(
             children: <Widget>[
-              _tab1(),
-              _tab2(),
+              ItemList(isDoneTab: false,),
+              ItemList(isDoneTab: true,)
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _tab1() {
-    return BookList(isDoneTab: false, page: page,);
-  }
-
-  Widget _tab2() {
-    return BookList(isDoneTab: true, page: page);
+      );
   }
 }

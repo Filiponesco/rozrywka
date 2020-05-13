@@ -13,9 +13,9 @@ Movie _$MovieFromJson(Map<String, dynamic> json) {
     director: json['director'] as String,
     year: json['year'] as String,
     note: json['note'] as String,
-    type: json['type'] as String,
     plot: json['plot'] as String,
-  );
+    genre: json['genre'] as String,
+  )..isDone = json['isDone'] as bool;
 }
 
 Map<String, dynamic> _$MovieToJson(Movie instance) => <String, dynamic>{
@@ -24,6 +24,7 @@ Map<String, dynamic> _$MovieToJson(Movie instance) => <String, dynamic>{
       'director': instance.director,
       'year': instance.year,
       'note': instance.note,
-      'type': instance.type,
       'plot': instance.plot,
+      'genre': instance.genre,
+      'isDone': instance.isDone,
     };

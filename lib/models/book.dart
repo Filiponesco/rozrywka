@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:rozrywka/models/item_card.dart';
+
 part 'book.g.dart';
+
 @JsonSerializable()
-class Book{
+class Book implements ItemCard {
   //id is generate by firebase
+  @override
   String id;
   String forename;
   String surname;
@@ -13,7 +17,8 @@ class Book{
   String publisher;
   String pages;
   String isbn;
-  bool isRead;
+  @override
+  bool isDone;
 
   Book(
       {this.id = "",
@@ -25,8 +30,25 @@ class Book{
       this.publisher = "",
       this.pages = "",
       this.isbn = "",
-      this.isRead = false});
+      this.isDone = false}) {
+    cardDescription = "$forename $surname";
+    cardTitle = "$title";
+  }
+  @override
+  Map<String, dynamic> toJson() => _$BookToJson(this);
 
   factory Book.fromJson(Map<String, dynamic> json) => _$BookFromJson(json);
-  Map<String, dynamic> toJson() => _$BookToJson(this);
+
+  //name of table in firebase
+  @override
+  String tableName = 'books';
+
+  //description in card
+  @JsonKey(ignore: true)
+  @override
+  String cardDescription;
+
+  @override
+  @JsonKey(ignore: true)
+  String cardTitle;
 }

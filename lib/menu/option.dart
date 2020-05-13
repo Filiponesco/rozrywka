@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rozrywka/services/database.dart';
 
 enum Option { film, series, book, game, logout }
 
@@ -16,3 +18,4 @@ Map<Option, OptionData> optionsData = {
   Option.game: OptionData(Icons.games, 'Gry'),
   Option.logout: OptionData(Icons.exit_to_app, 'Wyloguj'),
 };
+

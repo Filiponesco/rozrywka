@@ -16,6 +16,7 @@ Game _$GameFromJson(Map<String, dynamic> json) {
     platforms: json['platforms'] as String,
     publisher: json['publisher'] as String,
     category: json['category'] as String,
+    isDone: json['isDone'] as bool,
   );
 }
 
@@ -28,4 +29,5 @@ Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{
       'platforms': instance.platforms,
       'publisher': instance.publisher,
       'category': instance.category,
+      'isDone': instance.isDone,
     };
