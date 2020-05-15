@@ -5,13 +5,18 @@ part 'movie.g.dart';
 
 @JsonSerializable()
 class Movie implements ItemCard{
+  @JsonKey(defaultValue: "")
   @override
   String id;
+  @JsonKey(name: 'Title', defaultValue: "")
   String title;
+  @JsonKey(name: 'Director', defaultValue: "")
   String director;
+  @JsonKey(name: 'Year', defaultValue: "")
   String year;
-  String note;
+  @JsonKey(name: 'Plot', defaultValue: "")
   String plot;
+  @JsonKey(name: 'Genre', defaultValue: "")
   String genre;
 
   Movie(
@@ -19,13 +24,12 @@ class Movie implements ItemCard{
       this.title = "",
       this.director = "",
       this.year = "",
-      this.note = "",
       this.plot = "",
       this.genre = ""}){
     cardTitle = title;
     cardDescription = "$director";
   }
-
+  @JsonKey(defaultValue: false)
   @override
   bool isDone = false;
 

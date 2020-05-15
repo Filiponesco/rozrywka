@@ -15,9 +15,8 @@ Series _$SeriesFromJson(Map<String, dynamic> json) {
     genre: json['genre'] as String,
     plot: json['plot'] as String,
     director: json['director'] as String,
-  )
-    ..note = json['note'] as String
-    ..isDone = json['isDone'] as bool;
+    isDone: json['isDone'] as bool,
+  )..note = json['note'] as String;
 }
 
 Map<String, dynamic> _$SeriesToJson(Series instance) => <String, dynamic>{

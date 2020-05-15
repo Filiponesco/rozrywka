@@ -8,23 +8,21 @@ part of 'movie.dart';
 
 Movie _$MovieFromJson(Map<String, dynamic> json) {
   return Movie(
-    id: json['id'] as String,
-    title: json['title'] as String,
-    director: json['director'] as String,
-    year: json['year'] as String,
-    note: json['note'] as String,
-    plot: json['plot'] as String,
-    genre: json['genre'] as String,
-  )..isDone = json['isDone'] as bool;
+    id: json['id'] as String ?? '',
+    title: json['Title'] as String ?? '',
+    director: json['Director'] as String ?? '',
+    year: json['Year'] as String ?? '',
+    plot: json['Plot'] as String ?? '',
+    genre: json['Genre'] as String ?? '',
+  )..isDone = json['isDone'] as bool ?? false;
 }
 
 Map<String, dynamic> _$MovieToJson(Movie instance) => <String, dynamic>{
       'id': instance.id,
-      'title': instance.title,
-      'director': instance.director,
-      'year': instance.year,
-      'note': instance.note,
-      'plot': instance.plot,
-      'genre': instance.genre,
+      'Title': instance.title,
+      'Director': instance.director,
+      'Year': instance.year,
+      'Plot': instance.plot,
+      'Genre': instance.genre,
       'isDone': instance.isDone,
     };
