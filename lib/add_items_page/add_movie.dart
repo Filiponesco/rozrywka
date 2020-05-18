@@ -114,33 +114,23 @@ class _AddMovieFormState extends State<AddMovieForm> {
           padding: EdgeInsets.all(8),
           children: <Widget>[
             SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Flexible(
-                  flex: 2,
-                  child: TextFormField(
-                    focusNode: myFocusNode,
-                    controller: _txtTitle,
-                    onSaved: (value) => _movie.title = value,
-                    validator: (value) =>
-                        value.isEmpty ? "Tytuł nie może być pusty" : null,
-                    textCapitalization: TextCapitalization.words,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(), labelText: 'Tytuł'),
-                  ),
-                ),
-                Flexible(
-                  flex: 1,
-                  child: FlatButton(
-                    color: Colors.blue,
-                    child: Text("Wyszukaj"),
-                    onPressed: () => _searchMovie(),
-                  ),
-                )
-              ],
+            TextFormField(
+              focusNode: myFocusNode,
+              controller: _txtTitle,
+              onSaved: (value) => _movie.title = value,
+              validator: (value) =>
+                  value.isEmpty ? "Tytuł nie może być pusty" : null,
+              textCapitalization: TextCapitalization.words,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(), labelText: 'Tytuł'),
             ),
             SizedBox(height: 10),
+            FlatButton(
+              color: Colors.blue,
+              child: Text("Wyszukaj"),
+              onPressed: () => _searchMovie(),
+            ),
+            SizedBox(height: 10,),
             TextFormField(
               controller: _txtDirector,
               onSaved: (value) => _movie.director = value,

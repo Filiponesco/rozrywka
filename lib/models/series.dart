@@ -3,19 +3,31 @@ import 'package:rozrywka/models/item_card.dart';
 part 'series.g.dart';
 @JsonSerializable()
 class Series implements ItemCard{
+
+  @JsonKey(defaultValue: "")
+  @override
+  String id;
+
+  @JsonKey(defaultValue: "")
   String title;
+
+  @JsonKey(defaultValue: "")
   String years;
+
+  @JsonKey(defaultValue: "")
   String releasedYear;
+
+  @JsonKey(defaultValue: "")
   String genre;
+
+  @JsonKey(defaultValue: "")
   String plot;
+
+  @JsonKey(defaultValue: "")
   String director;
+
+  @JsonKey(defaultValue: "")
   String note;
-  Series({this.id = "", this.title="", this.years="",
-  this.releasedYear="", this.genre="", this.plot="",
-  this.director="", this.isDone = false}){
-    cardTitle = title;
-    cardDescription = "$director";
-  }
 
   @JsonKey(ignore: true)
   @override
@@ -26,14 +38,16 @@ class Series implements ItemCard{
   String cardTitle;
 
   @override
-  String id;
-
-  @override
-  bool isDone;
+  bool isDone = false;
 
   @JsonKey(ignore: true)
   @override
   String tableName = 'series';
+
+  Series({this.title, this.director}){
+    cardTitle = title;
+    cardDescription = "$director";
+  }
 
   factory Series.fromJson(Map<String, dynamic> json) => _$SeriesFromJson(json);
 

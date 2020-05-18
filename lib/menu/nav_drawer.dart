@@ -5,14 +5,19 @@ import 'option.dart';
 
 class NavDrawer extends StatelessWidget {
   final Map<Option, OptionData> options = optionsData; //dependency!
+  String email;
+  NavDrawer(){
+    _fetchUser();
+  }
   @override
   Widget build(BuildContext context) {
+    final userID= Provider.of<String>(context, listen: false);
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
           UserAccountsDrawerHeader(
-            accountEmail: Text("TwojEmail@gmail.com"),
+            accountEmail: Text(email ?? ''),
             decoration: BoxDecoration(
                 color: Colors.green,
                 image: DecorationImage(
@@ -50,5 +55,8 @@ class NavDrawer extends StatelessWidget {
         }
       },
     );
+  }
+  Future _fetchUser() async{
+      email = await Auth().userEmail;
   }
 }

@@ -7,39 +7,40 @@ part 'book.g.dart';
 @JsonSerializable()
 class Book implements ItemCard {
   //id is generate by firebase
+  @JsonKey(defaultValue: "")
   @override
   String id;
+
+  @JsonKey(defaultValue: "")
   String forename;
+
+  @JsonKey(defaultValue: "")
   String surname;
+
+  @JsonKey(defaultValue: "title")
   String title;
+
+  @JsonKey(defaultValue: "")
   String category;
+
+  @JsonKey(defaultValue: "")
   String publishedDate;
+
+  @JsonKey(defaultValue: "")
   String publisher;
+
+  @JsonKey(defaultValue: "")
   String pages;
+
+  @JsonKey(defaultValue: "")
   String isbn;
-  @override
-  bool isDone;
 
-  Book(
-      {this.id = "",
-      this.forename = "",
-      this.surname = "",
-      this.title = "",
-      this.category = "",
-      this.publishedDate = "",
-      this.publisher = "",
-      this.pages = "",
-      this.isbn = "",
-      this.isDone = false}) {
-    cardDescription = "$forename $surname";
-    cardTitle = "$title";
-  }
+  @JsonKey(defaultValue: false)
   @override
-  Map<String, dynamic> toJson() => _$BookToJson(this);
-
-  factory Book.fromJson(Map<String, dynamic> json) => _$BookFromJson(json);
+  bool isDone = false;
 
   //name of table in firebase
+  @JsonKey(ignore: true)
   @override
   String tableName = 'books';
 
@@ -51,4 +52,22 @@ class Book implements ItemCard {
   @override
   @JsonKey(ignore: true)
   String cardTitle;
+
+  //cardTitle and cardDescription needs in constructor specifics field
+  Book(
+      {this.forename,
+      this.surname,
+      this.title,
+      this.category,
+      this.publishedDate,
+      this.publisher}) {
+    print('Konstruktor book');
+    cardDescription = "$forename $surname";
+    cardTitle = "$title";
+  }
+
+  @override
+  Map<String, dynamic> toJson() => _$BookToJson(this);
+
+  factory Book.fromJson(Map<String, dynamic> json) => _$BookFromJson(json);
 }

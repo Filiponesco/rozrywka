@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:rozrywka/services/auth.dart';
 
 enum FormType{
@@ -15,10 +18,10 @@ class LoginPage extends StatefulWidget{
 class _LoginPageState extends State<LoginPage>{
   //provide validating form
   final formKey = GlobalKey<FormState>();
-
   String _email;
   String _password;
   FormType _formType = FormType.login;
+  ProgressDialog pr;
 
   bool validateAndSave(){
     final form = formKey.currentState;
@@ -31,33 +34,42 @@ class _LoginPageState extends State<LoginPage>{
   }
   void validateAndSubmit(context)async {
     if (validateAndSave()) {
+      pr.show();
       try {
         if (_formType == FormType.login) {
           String userID = await widget.auth.signInWithEmailAndPassword(
               _email, _password);
+          pr.hide();
           print("Signed in: $userID");
         } else {
           String userID = await widget.auth.createUserWithEmailAndPassword(
               _email, _password);
+          pr.hide();
           print("Registered user: $userID");
         }
       }
-      catch (e) {
+      on PlatformException catch (e) {
         print("Error: $e");
-        _showAlert(context);
+        pr.hide();
+        _showAlert(context, e.message);
+      }
+      catch(e){
+        print(e.toString());
+        pr.hide();
+        _showAlert(context, 'Nieznany błąd');
       }
     }
   }
 
-  void _showAlert(context) {
+  void _showAlert(context, String message) {
     showDialog(
         context: context,
         builder: (context) =>
         GestureDetector(
           onTap: () => Navigator.pop(context),
           child: AlertDialog(
-            title: Text("Niepoprawne dane"),
-            content: Text("Błędny login lub hasło"),
+            title: Text("Coś poszło nie tak"),
+            content: Text(message),
           ),
         )
     );
@@ -76,6 +88,8 @@ class _LoginPageState extends State<LoginPage>{
     }
     @override
     Widget build(BuildContext context) {
+      pr = new ProgressDialog(context, showLogs: true);
+      pr.style(message: 'Logowanie...');
       return Scaffold(
           appBar: AppBar(
             title: Text("Zaloguj się do rozrywki"),

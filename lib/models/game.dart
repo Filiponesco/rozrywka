@@ -5,35 +5,34 @@ part 'game.g.dart';
 
 @JsonSerializable()
 class Game implements ItemCard {
+  @JsonKey(defaultValue: "")
   @override
   String id;
+
+  @JsonKey(defaultValue: "")
   String title;
+
+  @JsonKey(defaultValue: "")
   String forename;
+
+  @JsonKey(defaultValue: "")
   String surname;
+
+  @JsonKey(defaultValue: "")
   String publishedDate;
+
+  @JsonKey(defaultValue: "")
   String platforms;
+
+  @JsonKey(defaultValue: "")
   String publisher;
+
+  @JsonKey(defaultValue: "")
   String category;
+
+  @JsonKey(defaultValue: false)
   @override
-  bool isDone;
-
-  Game(
-      {this.id = "",
-      this.title,
-      this.forename = "",
-      this.surname = "",
-      this.publishedDate = "",
-      this.platforms = "",
-      this.publisher = "",
-      this.category = "",
-      this.isDone = false}){
-    cardTitle = title;
-    cardDescription = "$forename $surname";
-  }
-
-  factory Game.fromJson(Map<String, dynamic> json) => _$GameFromJson(json);
-
-  Map<String, dynamic> toJson() => _$GameToJson(this);
+  bool isDone = false;
 
   @JsonKey(ignore: true)
   @override
@@ -46,4 +45,13 @@ class Game implements ItemCard {
   @JsonKey(ignore: true)
   @override
   String cardTitle;
+
+  Game({this.title, this.forename, this.surname}){
+    cardTitle = title;
+    cardDescription = "$forename $surname";
+  }
+
+  factory Game.fromJson(Map<String, dynamic> json) => _$GameFromJson(json);
+
+  Map<String, dynamic> toJson() => _$GameToJson(this);
 }

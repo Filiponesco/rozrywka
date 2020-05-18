@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:rozrywka/menu/nav_drawer.dart';
 import 'package:rozrywka/menu/option.dart';
 import 'package:rozrywka/models/create_tabs.dart';
+import 'package:rozrywka/services/auth.dart';
 
 import '../../widgets/item_list.dart';
 

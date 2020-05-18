@@ -8,16 +8,16 @@ part of 'game.dart';
 
 Game _$GameFromJson(Map<String, dynamic> json) {
   return Game(
-    id: json['id'] as String,
-    title: json['title'] as String,
-    forename: json['forename'] as String,
-    surname: json['surname'] as String,
-    publishedDate: json['publishedDate'] as String,
-    platforms: json['platforms'] as String,
-    publisher: json['publisher'] as String,
-    category: json['category'] as String,
-    isDone: json['isDone'] as bool,
-  );
+    title: json['title'] as String ?? '',
+    forename: json['forename'] as String ?? '',
+    surname: json['surname'] as String ?? '',
+  )
+    ..id = json['id'] as String ?? ''
+    ..publishedDate = json['publishedDate'] as String ?? ''
+    ..platforms = json['platforms'] as String ?? ''
+    ..publisher = json['publisher'] as String ?? ''
+    ..category = json['category'] as String ?? ''
+    ..isDone = json['isDone'] as bool ?? false;
 }
 
 Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{

@@ -56,6 +56,7 @@ class _AddBookFormState extends State<AddBookForm> {
 
   @override
   Widget build(BuildContext context) {
+    print("Book: ${_book.isDone}");
     final userID = Provider.of<String>(context);
     return Form(
       key: _formKey,

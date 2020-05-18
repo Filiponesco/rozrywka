@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rozrywka/menu/option.dart';
 import 'package:rozrywka/models/book.dart';
 import 'package:rozrywka/models/item_card.dart';
 import 'package:rozrywka/pages/item_info.dart';
@@ -22,8 +23,9 @@ class ItemTile extends StatelessWidget {
   }
 
   void _clickOnCard(context) {
+
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ItemInfo()));
+        context, MaterialPageRoute(builder: (context) => ItemInfo(_item)));
   }
 
   @override

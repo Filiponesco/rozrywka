@@ -10,14 +10,16 @@ import 'package:rozrywka/models/item_card.dart';
 import 'package:rozrywka/services/database.dart';
 
 class OptionTabView {
-  String titleOne = "titleONe";
+  String titleOne;
   String titleTwo;
   var addNewItemPage;
+  var onClickCard;
 
   OptionTabView(
       {this.titleOne,
       this.titleTwo,
-      this.addNewItemPage});
+      this.addNewItemPage,
+      this.onClickCard});
 }
 
 Map<Option, OptionTabView> specificsTabs = {
