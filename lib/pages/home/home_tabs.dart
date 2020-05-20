@@ -4,7 +4,11 @@ import 'package:rozrywka/add_items_page/add_item.dart';
 import 'package:rozrywka/add_items_page/add_movie_api.dart';
 import 'package:rozrywka/menu/nav_drawer.dart';
 import 'package:rozrywka/menu/option.dart';
+import 'package:rozrywka/models/book.dart';
+import 'package:rozrywka/models/game.dart';
 import 'package:rozrywka/models/item_card.dart';
+import 'package:rozrywka/models/movie.dart';
+import 'package:rozrywka/models/series.dart';
 import 'package:rozrywka/pages/home/create_tabs.dart';
 import 'package:rozrywka/services/auth.dart';
 import 'package:rozrywka/services/database.dart';
@@ -26,19 +30,19 @@ class HomeTabs extends StatelessWidget {
                 : AddItem(specifics[page].typeOfNewItem, false)));
   }
 
-  Stream<List<ItemCard>> getItems(Option page, String userID) {
+  List<ItemCard> getItems(Option page, String userID, context) {
     switch (page) {
       case Option.film:
-        return DatabaseService(uid: userID).movies;
+        return Provider.of<List<Movie>>(context);
         break;
       case Option.series:
-        return DatabaseService(uid: userID).series;
+        return Provider.of<List<Series>>(context);
         break;
       case Option.book:
-        return DatabaseService(uid: userID).books;
+        return Provider.of<List<Book>>(context);
         break;
       case Option.game:
-        return DatabaseService(uid: userID).games;
+        return Provider.of<List<Game>>(context);
         break;
       case Option.logout:
         // TODO: Handle this case.
@@ -53,6 +57,7 @@ class HomeTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final page = Provider.of<ValueNotifier<Option>>(context);
+    var movies = Provider.of<List<Movie>>(context);
     if (page.value == Option.logout)
       return Container(
           color: Colors.white,
@@ -76,14 +81,31 @@ class HomeTabs extends StatelessWidget {
               ],
             ),
           ),
-          body: _tabsOrLoading(getItems(page.value, userID)),
+          body: _tabsOrLoading(movies),
         ),
       );
     }
   }
 
-  Widget _tabsOrLoading(Stream<List<ItemCard>> items) {
-    return StreamBuilder<List<ItemCard>>(
+  Widget _tabsOrLoading(List<ItemCard> items) {
+    List<Widget> children;
+    if (items != null) {
+      children = <Widget>[
+        ItemList(items: _selectItemsByIsDone(items, false), isDoneTab: false),
+        ItemList(items: _selectItemsByIsDone(items, true), isDoneTab: true)
+      ];
+    }
+    else{
+      children = <Widget>[
+        Center(child: CircularProgressIndicator()),
+        Center(child: CircularProgressIndicator())
+      ];
+    }
+    return TabBarView(
+      children: children,
+    );
+
+    /*StreamBuilder<List<ItemCard>>(
       stream: items,
       builder: (context, AsyncSnapshot<List<ItemCard>> snapshot) {
         List<Widget> children;
@@ -107,6 +129,6 @@ class HomeTabs extends StatelessWidget {
           children: children,
         );
       },
-    );
+    );*/
   }
 }
