@@ -38,30 +38,20 @@ class ItemInfo extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(top: 8, bottom: 50),
-                child: Row(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(item.cardTitle, style: TextStyle(fontSize: 30)),
+                    Padding(
+                      padding: const EdgeInsets.all(30.0),
+                      child: CircleAvatar(
+                        radius: 50,
+                      ),
+                    ),
+                    ..._nameFields()
                   ],
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      CircleAvatar(
-                        radius: 50,
-                      )
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[..._nameFields()],
-                  )
-                ],
-              )
             ],
           )),
     ));
@@ -69,9 +59,29 @@ class ItemInfo extends StatelessWidget {
 
   List<Widget> _nameFields() {
     var fields = item.toJson();
+    var fieldsPL = item.jsonToPL();
     return fields.keys
-        .map((key) => key != 'id'
-            ? Text('$key: ${fields[key]}')
+        .map((key) => key != 'id' &&
+                key != 'title' &&
+                key != 'Title' &&
+                fields[key] != '' &&
+                key != 'isDone'
+            ? Padding(
+                padding: const EdgeInsets.only(top: 15.0, left: 8.0, right: 8.0),
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text.rich(
+                      TextSpan(children: [
+                        TextSpan(
+                            text: '${fieldsPL[key]}: ',
+                            style: TextStyle(
+                                fontSize: 15.0, fontWeight: FontWeight.bold)),
+                        TextSpan(
+                            text: '${fields[key]}',
+                            style: TextStyle(fontSize: 15.0))
+                      ]),
+                    )),
+              )
             : Container(
                 width: 0,
                 height: 0,

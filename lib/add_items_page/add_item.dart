@@ -19,16 +19,16 @@ class AddItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-      appBar: AppBar(
-          automaticallyImplyLeading: true,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-          title:
+          appBar: AppBar(
+              automaticallyImplyLeading: true,
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+              title:
               isEditing ? Text(item.titleEditItem) : Text(item.titleAddItem)),
-      body: AddItemForm(item, isEditing),
-    ));
+          body: AddItemForm(item, isEditing),
+        ));
   }
 }
 
@@ -63,7 +63,8 @@ class _AddItemFormState extends State<AddItemForm> {
 
   void _validateAndSend(String userID) async {
     if (_validateAndSave()) {
-      await DatabaseService(uid: userID).addItem(_itemJS, widget._item.tableName);
+      await DatabaseService(uid: userID).addItem(
+          _itemJS, widget._item.tableName);
       _showSnackBar(message: "Zapisano");
     }
   }
@@ -100,14 +101,19 @@ class _AddItemFormState extends State<AddItemForm> {
   Widget _listFields() {
     return ListView(
         padding: EdgeInsets.all(8),
-        children: <Widget>[..._textFields(), MyCheckBox(_itemJS, _itemLabelPL), _saveBtn()]);
+        children: <Widget>[
+          ..._textFields(),
+          MyCheckBox(_itemJS, _itemLabelPL),
+          _saveBtn()
+        ]);
   }
 
   List<Widget> _textFields() {
     return _itemJS.keys
-        .map<Widget>((key) => key != 'isDone' && key != 'id'
-            ? _oneField(key, _itemJS[key])
-            : Container())
+        .map<Widget>((key) =>
+    key != 'isDone' && key != 'id'
+        ? _oneField(key, _itemJS[key])
+        : Container())
         .toList();
   }
 
@@ -118,6 +124,10 @@ class _AddItemFormState extends State<AddItemForm> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
+        validator: key == 'title' || key == 'Title' ? (value) =>
+        value.isEmpty
+            ? "Tytuł nie może być pusty"
+        : null : null,
         controller: controller,
         onSaved: (value) => _itemJS[key] = value,
         textCapitalization: TextCapitalization.words,
@@ -130,17 +140,21 @@ class _AddItemFormState extends State<AddItemForm> {
   Widget _saveBtn() {
     return FlatButton(
       color: Colors.blue,
-      onPressed: () => widget._isEditing
+      onPressed: () =>
+      widget._isEditing
           ? _validateAndUpdate(userID)
           : _validateAndSend(userID),
       child: Text("Zapisz"),
     );
   }
 }
+
 class MyCheckBox extends StatefulWidget {
   final _itemJS;
   final _itemLabelPL;
+
   MyCheckBox(this._itemJS, this._itemLabelPL);
+
   @override
   _MyCheckBoxState createState() => _MyCheckBoxState();
 }
@@ -153,7 +167,7 @@ class _MyCheckBoxState extends State<MyCheckBox> {
         Checkbox(
             onChanged: (value) {
               setState(() {
-                widget._itemJS['isDone']= value;
+                widget._itemJS['isDone'] = value;
               });
             },
             value: widget._itemJS['isDone']),

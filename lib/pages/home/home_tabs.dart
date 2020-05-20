@@ -53,27 +53,33 @@ class HomeTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final page = Provider.of<ValueNotifier<Option>>(context);
-    final userID = Provider.of<String>(context);
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: () => _newIntent(context, page.value),
-        ),
-        drawer: NavDrawer(), //dependence
-        appBar: AppBar(
-          title: Text(options[page.value].title),
-          bottom: TabBar(
-            tabs: [
-              Text(specifics[page.value].titleOne),
-              Text(specifics[page.value].titleTwo),
-            ],
+    if (page.value == Option.logout)
+      return Container(
+          color: Colors.white,
+          child: Center(child: CircularProgressIndicator()));
+    else {
+      final userID = Provider.of<String>(context);
+      return DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: () => _newIntent(context, page.value),
           ),
+          drawer: NavDrawer(), //dependence
+          appBar: AppBar(
+            title: Text(options[page.value].title),
+            bottom: TabBar(
+              tabs: [
+                Text(specifics[page.value].titleOne),
+                Text(specifics[page.value].titleTwo),
+              ],
+            ),
+          ),
+          body: _tabsOrLoading(getItems(page.value, userID)),
         ),
-        body: _tabsOrLoading(getItems(page.value, userID)),
-      ),
-    );
+      );
+    }
   }
 
   Widget _tabsOrLoading(Stream<List<ItemCard>> items) {
@@ -86,15 +92,16 @@ class HomeTabs extends StatelessWidget {
             Center(child: CircularProgressIndicator()),
             Center(child: CircularProgressIndicator())
           ];
-        }
-        else {
+        } else {
           print('Data: ${snapshot.data}');
           children = <Widget>[
-              ItemList(
-                  items: _selectItemsByIsDone(snapshot.data, false), isDoneTab: false),
-              ItemList(
-                  items: _selectItemsByIsDone(snapshot.data, true), isDoneTab: true)
-            ];
+            ItemList(
+                items: _selectItemsByIsDone(snapshot.data, false),
+                isDoneTab: false),
+            ItemList(
+                items: _selectItemsByIsDone(snapshot.data, true),
+                isDoneTab: true)
+          ];
         }
         return TabBarView(
           children: children,
