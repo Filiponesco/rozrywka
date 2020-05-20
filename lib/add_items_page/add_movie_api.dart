@@ -1,3 +1,4 @@
+
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
@@ -7,7 +8,7 @@ import 'package:rozrywka/models/movie.dart';
 import 'package:rozrywka/services/api_movies.dart';
 import 'package:rozrywka/services/database.dart';
 
-class AddMovie extends StatelessWidget {
+class AddMovieApi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -53,7 +54,7 @@ class _AddMovieFormState extends State<AddMovieForm> {
 
   void _validateAndSend(String userID) async {
     if (_validateAndSave()) {
-      await DatabaseService(uid: userID).addItem(_movie);
+      await DatabaseService(uid: userID).addItem(_movie.toJson(), 'movies');
       _showSnackBar(message: "Zapisano");
     }
   }

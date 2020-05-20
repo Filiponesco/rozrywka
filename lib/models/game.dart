@@ -54,4 +54,26 @@ class Game implements ItemCard {
   factory Game.fromJson(Map<String, dynamic> json) => _$GameFromJson(json);
 
   Map<String, dynamic> toJson() => _$GameToJson(this);
+
+  @JsonKey(ignore: true)
+  @override
+  String titleAddItem = 'Dodaj grę';
+
+  @override
+  Map<String, String> jsonToPL() {
+    return <String, String>{
+      'id': 'id',
+      'title': 'Tytuł',
+      'forename': 'Imię',
+      'surname': 'Nazwisko',
+      'publishedDate': 'Data publikacji',
+      'platforms': 'Platformy',
+      'publisher': 'Wydawca',
+      'category': 'Kategoria',
+      'isDone': 'Zagrana',
+    };
+  }
+
+  @override
+  String titleEditItem = 'Edytuj grę';
 }

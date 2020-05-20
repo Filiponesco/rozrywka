@@ -18,9 +18,9 @@ class DatabaseService {
   final CollectionReference usersCollection =
   Firestore.instance.collection('users');
 
-  Future addItem(ItemCard item)async {
-    return await usersCollection.document(uid).collection(item.tableName)
-        .add(item.toJson());
+  Future addItem(Map<String, dynamic> itemJS, String tableName)async {
+    return await usersCollection.document(uid).collection(tableName)
+        .add(itemJS);
   }
   Future deleteItem(ItemCard item) async {
     return await usersCollection
@@ -37,6 +37,13 @@ class DatabaseService {
         .updateData({
       'isDone': isDone,
     });
+  }
+  Future updateItem(Map<String, dynamic> itemJS, String tableName) async{
+    return await usersCollection
+        .document(uid)
+        .collection(tableName)
+        .document(itemJS['id'])
+        .updateData(itemJS);
   }
   //book
   //books list from snapshot

@@ -54,4 +54,26 @@ class Series implements ItemCard{
   @override
   Map<String, dynamic> toJson() => _$SeriesToJson(this);
 
+  @JsonKey(ignore: true)
+  @override
+  String titleAddItem = 'Dodaj serial';
+
+  @override
+  Map<String, String> jsonToPL() {
+    return <String, String>{
+      'id': 'id',
+      'title': 'Tytuł',
+      'years': 'Lata',
+      'releasedYear': 'Rok wydania',
+      'genre': 'Gatunek',
+      'plot': 'Opis',
+      'director': 'Reżyser',
+      'note': 'Ocena',
+      'isDone': 'Obejrzany',
+    };
+  }
+
+  @override
+  String titleEditItem = 'Edytuj serial';
+
 }

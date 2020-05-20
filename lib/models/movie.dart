@@ -49,4 +49,24 @@ class Movie implements ItemCard {
 
   @override
   Map<String, dynamic> toJson() => _$MovieToJson(this);
+
+  @JsonKey(ignore: true)
+  @override
+  String titleAddItem = 'Dodaj film';
+
+  @override
+  Map<String, String> jsonToPL() {
+    return <String, String>{
+      'id': 'id',
+      'Title': 'Tytuł',
+      'Director': 'Reżyser',
+      'Year': 'Rok',
+      'Plot': 'Opis',
+      'Genre': 'Gatunek',
+      'isDone': 'Obejrzany',
+    };
+  }
+
+  @override
+  String titleEditItem = 'Edytuj film';
 }

@@ -10,7 +10,7 @@ Book _$BookFromJson(Map<String, dynamic> json) {
   return Book(
     forename: json['forename'] as String ?? '',
     surname: json['surname'] as String ?? '',
-    title: json['title'] as String ?? 'title',
+    title: json['title'] as String ?? '',
     category: json['category'] as String ?? '',
     publishedDate: json['publishedDate'] as String ?? '',
     publisher: json['publisher'] as String ?? '',
