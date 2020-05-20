@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/icon_data.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:rozrywka/models/item_card.dart';
 part 'series.g.dart';
@@ -75,5 +77,8 @@ class Series implements ItemCard{
 
   @override
   String titleEditItem = 'Edytuj serial';
+
+  @override
+  IconData icon = Icons.local_movies;
 
 }

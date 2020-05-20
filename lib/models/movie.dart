@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/icon_data.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:rozrywka/models/item_card.dart';
 
@@ -69,4 +71,7 @@ class Movie implements ItemCard {
 
   @override
   String titleEditItem = 'Edytuj film';
+
+  @override
+  IconData icon = Icons.movie;
 }

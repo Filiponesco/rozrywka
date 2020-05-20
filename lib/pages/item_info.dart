@@ -44,9 +44,10 @@ class ItemInfo extends StatelessWidget {
                     Text(item.cardTitle, style: TextStyle(fontSize: 30)),
                     Padding(
                       padding: const EdgeInsets.all(30.0),
-                      child: CircleAvatar(
-                        radius: 50,
-                      ),
+                      child: Icon(
+                        item.icon,
+                        size: 100.0
+                      )
                     ),
                     ..._nameFields()
                   ],

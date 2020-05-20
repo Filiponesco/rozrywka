@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 abstract class ItemCard{
   String id;
   String tableName;
@@ -9,4 +11,5 @@ abstract class ItemCard{
   String titleAddItem;
   Map<String, String> jsonToPL();
   String titleEditItem;
+  IconData icon;
 }

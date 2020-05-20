@@ -1,8 +1,5 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rozrywka/menu/option.dart';
-import 'package:rozrywka/models/book.dart';
 import 'package:rozrywka/models/item_card.dart';
 import 'package:rozrywka/pages/item_info.dart';
 import 'package:rozrywka/services/database.dart';
@@ -41,9 +38,9 @@ class ItemTile extends StatelessWidget {
       child: Card(
           child: ListTile(
               onTap: () => _clickOnCard(context),
-              leading: CircleAvatar(
-                radius: 25,
-                backgroundColor: Colors.blueGrey,
+              leading: Icon(
+                _item.icon,
+                size: 50.0,
               ),
               title: Text(_item.cardTitle),
               subtitle: Text("${_item.cardDescription}"),

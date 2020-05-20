@@ -108,4 +108,7 @@ class Book implements ItemCard {
 
   @override
   String titleEditItem = 'Edytuj książkę';
+
+  @override
+  IconData icon = Icons.book;
 }
