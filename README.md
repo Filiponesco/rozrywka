@@ -1,16 +1,17 @@
 # rozrywka
 
-A new Flutter project.
+My third app in flutter
+## UI
+<img src="https://github.com/Filiponesco/rozrywka/blob/master/docs/GIF-200521_023759.gif" width="281" height="500"/>
 
-## Getting Started
+## Tools
+- API: http://www.omdbapi.com/
+- cloud_firestore: https://pub.dev/packages/cloud_firestore
+- firebase_auth: https://pub.dev/packages/firebase_auth
+- json_annotation: https://pub.dev/packages/json_annotation
+- progress_dialog: https://pub.dev/packages/progress_dialog
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## TODO
+- pick icon to cards
+- fetch poster from api
+- polish language from api
