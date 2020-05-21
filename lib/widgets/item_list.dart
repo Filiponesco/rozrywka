@@ -9,7 +9,9 @@ final bool isDoneTab;
   ItemList({
     @required this.items,
     @required this.isDoneTab
-  });
+  }){
+    print('ItemList: constructor');
+  }
 
   @override
   _ItemListState createState() => _ItemListState();
@@ -19,6 +21,7 @@ class _ItemListState extends State<ItemList> {
 
   @override
   Widget build(BuildContext context) {
+    print('ItemList: refresh');
     return ListView.builder(
         itemCount: widget.items.length,
         itemBuilder: (context, index) =>

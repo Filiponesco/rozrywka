@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
-import 'package:rozrywka/models/book.dart';
 import 'package:rozrywka/models/item_card.dart';
-import 'package:rozrywka/models/movie.dart';
-import 'package:rozrywka/services/api_movies.dart';
 import 'package:rozrywka/services/database.dart';
 
 class AddItem extends StatelessWidget {
   final ItemCard item;
   final bool isEditing;
-
 
   //item can contain also a few data for example only titleAddItem
   AddItem(this.item, this.isEditing);
@@ -19,16 +15,16 @@ class AddItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-          appBar: AppBar(
-              automaticallyImplyLeading: true,
-              leading: IconButton(
-                icon: Icon(Icons.arrow_back),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-              title:
+      appBar: AppBar(
+          automaticallyImplyLeading: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          title:
               isEditing ? Text(item.titleEditItem) : Text(item.titleAddItem)),
-          body: AddItemForm(item, isEditing),
-        ));
+      body: AddItemForm(item, isEditing),
+    ));
   }
 }
 
@@ -63,8 +59,9 @@ class _AddItemFormState extends State<AddItemForm> {
 
   void _validateAndSend(String userID) async {
     if (_validateAndSave()) {
-      await DatabaseService(uid: userID).addItem(
-          _itemJS, widget._item.tableName);
+      print('AddItem: ${_itemJS}');
+      await DatabaseService(uid: userID)
+          .addItem(_itemJS, widget._item.tableName);
       _showSnackBar(message: "Zapisano");
     }
   }
@@ -99,21 +96,18 @@ class _AddItemFormState extends State<AddItemForm> {
   }
 
   Widget _listFields() {
-    return ListView(
-        padding: EdgeInsets.all(8),
-        children: <Widget>[
-          ..._textFields(),
-          MyCheckBox(_itemJS, _itemLabelPL),
-          _saveBtn()
-        ]);
+    return ListView(padding: EdgeInsets.all(8), children: <Widget>[
+      ..._textFields(),
+      MyCheckBox(_itemJS, _itemLabelPL),
+      _saveBtn()
+    ]);
   }
 
   List<Widget> _textFields() {
     return _itemJS.keys
-        .map<Widget>((key) =>
-    key != 'isDone' && key != 'id'
-        ? _oneField(key, _itemJS[key])
-        : Container())
+        .map<Widget>((key) => key != 'isDone' && key != 'id'
+            ? _oneField(key, _itemJS[key])
+            : Container())
         .toList();
   }
 
@@ -124,13 +118,15 @@ class _AddItemFormState extends State<AddItemForm> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
-        validator: key == 'title' || key == 'Title' ? (value) =>
-        value.isEmpty
-            ? "Tytuł nie może być pusty"
-        : null : null,
         controller: controller,
+        maxLines: key == 'plot' || key == 'Plot' ? null : 1,
+        validator: key == 'title' || key == 'Title'
+            ? (value) => value.isEmpty ? "Tytuł nie może być pusty" : null
+            : null,
         onSaved: (value) => _itemJS[key] = value,
-        textCapitalization: TextCapitalization.words,
+        textCapitalization: key != 'plot' && key != 'Plot'
+            ? TextCapitalization.words
+            : TextCapitalization.sentences,
         decoration: InputDecoration(
             border: OutlineInputBorder(), labelText: _itemLabelPL[key]),
       ),
@@ -140,8 +136,7 @@ class _AddItemFormState extends State<AddItemForm> {
   Widget _saveBtn() {
     return FlatButton(
       color: Colors.blue,
-      onPressed: () =>
-      widget._isEditing
+      onPressed: () => widget._isEditing
           ? _validateAndUpdate(userID)
           : _validateAndSend(userID),
       child: Text("Zapisz"),

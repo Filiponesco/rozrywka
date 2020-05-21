@@ -1,20 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rozrywka/add_items_page/add_item.dart';
+import 'package:rozrywka/main.dart';
+import 'package:rozrywka/menu/option.dart';
+import 'package:rozrywka/models/book.dart';
+import 'package:rozrywka/models/game.dart';
 import 'package:rozrywka/models/item_card.dart';
+import 'package:rozrywka/models/movie.dart';
+import 'package:rozrywka/models/series.dart';
 
 class ItemInfo extends StatelessWidget {
   final ItemCard item;
+  ItemInfo(this.item){
+    print('ItemInfo: constructor');
+  }
 
-  ItemInfo(this.item);
-
-  void _newIntentEditItem(context) {
+  void _newIntentEditItem(context, item) {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => AddItem(item, true)));
   }
 
   @override
   Widget build(BuildContext context) {
+    print('ItemInfo: build');
     return MaterialApp(
         home: Scaffold(
       appBar: AppBar(
@@ -26,7 +35,7 @@ class ItemInfo extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.edit),
-            onPressed: () => _newIntentEditItem(context),
+            onPressed: () => _newIntentEditItem(context, item),
           )
         ],
       ),
@@ -49,7 +58,7 @@ class ItemInfo extends StatelessWidget {
                         size: 100.0
                       )
                     ),
-                    ..._nameFields()
+                    ..._nameFields(item)
                   ],
                 ),
               ),
@@ -58,11 +67,11 @@ class ItemInfo extends StatelessWidget {
     ));
   }
 
-  List<Widget> _nameFields() {
+  List<Widget> _nameFields(item) {
     var fields = item.toJson();
     var fieldsPL = item.jsonToPL();
     return fields.keys
-        .map((key) => key != 'id' &&
+        .map<Widget>((key) => key != 'id' &&
                 key != 'title' &&
                 key != 'Title' &&
                 fields[key] != '' &&

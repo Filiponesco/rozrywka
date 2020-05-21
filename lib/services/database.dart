@@ -51,7 +51,7 @@ class DatabaseService {
     return snapshot.documents.map((doc) {
       Map<String, dynamic> dataAndID = doc.data;
       dataAndID['id'] = doc.documentID;
-      print("data from Fire:  $dataAndID");
+      print("Database: fetch book");
       return Book.fromJson(dataAndID);
     }).toList();
   }
@@ -69,7 +69,7 @@ class DatabaseService {
     return snapshot.documents.map((doc) {
       Map<String, dynamic> dataAndID = doc.data;
       dataAndID['id'] = doc.documentID;
-      print("data from Fire:  $dataAndID");
+      print("Database: fetch game");
       return Game.fromJson(dataAndID);
     }).toList();
   }
@@ -87,7 +87,7 @@ class DatabaseService {
     return snapshot.documents.map((doc) {
       Map<String, dynamic> dataAndID = doc.data;
       dataAndID['id'] = doc.documentID;
-      print("data from Fire:  $dataAndID");
+      print("Database: fetch movie");
       return Movie.fromJson(dataAndID);
     }).toList();
   }
@@ -105,7 +105,7 @@ class DatabaseService {
     return snapshot.documents.map((doc) {
       Map<String, dynamic> dataAndID = doc.data;
       dataAndID['id'] = doc.documentID;
-      print("data from Fire:  $dataAndID");
+      print("Database: fetch one series");
       return Series.fromJson(dataAndID);
     }).toList();
   }

@@ -57,13 +57,14 @@ class HomeTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final page = Provider.of<ValueNotifier<Option>>(context);
-    var movies = Provider.of<List<Movie>>(context);
+    final userID = Provider.of<String>(context);
+    var items = getItems(page.value, userID, context);
+    print('HomeTabs: refresh');
     if (page.value == Option.logout)
       return Container(
           color: Colors.white,
           child: Center(child: CircularProgressIndicator()));
     else {
-      final userID = Provider.of<String>(context);
       return DefaultTabController(
         length: 2,
         child: Scaffold(
@@ -81,13 +82,14 @@ class HomeTabs extends StatelessWidget {
               ],
             ),
           ),
-          body: _tabsOrLoading(movies),
+          body: _tabsOrLoading(items),
         ),
       );
     }
   }
 
   Widget _tabsOrLoading(List<ItemCard> items) {
+    print('HomeTabs: _tabsOrLoading: refresh');
     List<Widget> children;
     if (items != null) {
       children = <Widget>[
@@ -104,31 +106,5 @@ class HomeTabs extends StatelessWidget {
     return TabBarView(
       children: children,
     );
-
-    /*StreamBuilder<List<ItemCard>>(
-      stream: items,
-      builder: (context, AsyncSnapshot<List<ItemCard>> snapshot) {
-        List<Widget> children;
-        if (!snapshot.hasData) {
-          children = <Widget>[
-            Center(child: CircularProgressIndicator()),
-            Center(child: CircularProgressIndicator())
-          ];
-        } else {
-          print('Data: ${snapshot.data}');
-          children = <Widget>[
-            ItemList(
-                items: _selectItemsByIsDone(snapshot.data, false),
-                isDoneTab: false),
-            ItemList(
-                items: _selectItemsByIsDone(snapshot.data, true),
-                isDoneTab: true)
-          ];
-        }
-        return TabBarView(
-          children: children,
-        );
-      },
-    );*/
   }
 }

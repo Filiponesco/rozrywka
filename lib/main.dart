@@ -16,9 +16,5 @@ class MyApp extends StatelessWidget {
         home: Wrapper()
       )
     );
-    /*return ChangeNotifierProvider<ValueNotifier<Option>>(
-        create: (context) => ValueNotifier<Option>(Option.values[0]),
-        child: LoginPage(),
-    );*/
   }
 }
